@@ -8,9 +8,9 @@ const Div = styled.div`
   width: calc(100vw - 17vw);
 `;
 
-const Layout = ({ children }) => {
+const Layout = ({ children, ...SidebarProps }) => {
   return (<>
-    <Sidebar />
+    <Sidebar {...SidebarProps} />
     <Div>
       {children}
     </Div>
