@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Tickets } from '../assets/tickets.svg';
-import GenreName from './GenreName';
+import { faCompactDisc, faHeartbeat, faChartBar, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import MenuItem from './MenuItem';
 const Div = styled.div`
   border-right: 1px solid lightgray;
   position: fixed;
@@ -18,7 +19,7 @@ const H4 = styled.h4`
   font-size: 0.9rem;
 `;
 
-const Genres = styled.div`
+const Menu = styled.div`
   padding: 0.5rem;
 
 `;
@@ -27,12 +28,18 @@ const Sidebar = ({ genres }) => {
   return (
     <Div>
       <Tickets width={150} />
+      <H4>Discover</H4>
+      <Menu>
+        <MenuItem path="/discover" icon={faHeartbeat} name="Popular"></MenuItem>
+        <MenuItem path="/discover" icon={faChartBar} name="Top Rated"></MenuItem>
+        <MenuItem path="/discover" icon={faSpinner} name="Upcoming"></MenuItem>
+      </Menu>
       <H4>Genres</H4>
-      <Genres>
+      <Menu>
         {genres.map(genre => (
-          <GenreName key={genre.id} name={genre.name}></GenreName>
+          <MenuItem key={genre.id} path="/genre" icon={faCompactDisc} name={genre.name}></MenuItem>
         ))}
-      </Genres>
+      </Menu>
     </Div>);
 }
 

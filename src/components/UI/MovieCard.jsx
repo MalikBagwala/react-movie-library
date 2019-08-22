@@ -33,7 +33,6 @@ const Content = styled.div`
 `;
 
 const MovieCard = ({ title, id, rating, history, poster_path }) => {
-  console.log(history);
   return (<Div onClick={() => {
     history.push(`/movie/${id}`)
   }}>

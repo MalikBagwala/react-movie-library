@@ -3,6 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import tmdb_api from './api/tmdb';
 import Genre from './components/Genre';
 import Layout from './components/Layout';
+import Discover from './components/Discover';
+import Movie from './components/Movie';
 
 class App extends React.Component {
   state = {
@@ -22,10 +24,17 @@ class App extends React.Component {
     }
   }
   render(){
+  const {genres} = this.state;
+  // console.log(genres);
   return (
-    <Layout {...this.state}>
+    <Layout genres={genres}>
       <Switch>
-        <Route path="/genre/:name" component={Genre} ></Route>
+        <Route path="/genre/:name" render={(props)=>{
+          return <Genre genres={genres} {...props}></Genre>
+        }}
+        />
+        <Route path="/discover/:type" component={Discover}/>
+        <Route path="/movie/:id" component={Movie}/>
       </Switch>
     </Layout>
   );

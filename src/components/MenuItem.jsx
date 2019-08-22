@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompactDisc } from '@fortawesome/free-solid-svg-icons'
+import _ from "lodash";
 import { withRouter } from "react-router-dom";
 const Div = styled.div`
   margin-top: 0.2rem;
@@ -24,14 +24,14 @@ const Span = styled.span`
 `;
 
 
-const GenreName = ({ name, history }) => {
+const MenuItem = ({ name, history, icon, path }) => {
   return (
-    <Div isActive={history.location.pathname.includes(name.toLowerCase())} onClick={() => {
-      history.push(`/genre/${name.toLowerCase()}`)
+    <Div isActive={history.location.pathname.includes(_.snakeCase(name))} onClick={() => {
+      history.push(`${path}/${_.snakeCase(name)}`)
     }}>
-      <FontAwesomeIcon icon={faCompactDisc}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={icon}></FontAwesomeIcon>
       <Span>{name}</Span>
     </Div >);
 }
 
-export default withRouter(GenreName);
+export default withRouter(MenuItem);

@@ -8,11 +8,18 @@ const Rating = ({ rating }) => {
   for (let i = 0; i < noStars; i++) {
     stars.push(i);
   }
-  return (<div>
-    {stars.map(star => (
-      <FontAwesomeIcon style={{ marginRight: 5 }} color="#FFC940" icon={faStar}></FontAwesomeIcon>
-    ))}
-  </div>)
+  return (
+    <div>
+      {stars.map((star) => (
+        <FontAwesomeIcon
+          key={star}
+          style={{ marginRight: 5 }}
+          color="#FFC940"
+          icon={faStar}>
+
+        </FontAwesomeIcon>
+      ))}
+    </div>)
 }
 
 export default Rating;

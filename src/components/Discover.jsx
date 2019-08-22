@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import tmdb_api from '../api/tmdb';
 import MovieList from './MovieList';
-
+import _ from "lodash";
 const H2 = styled.h2`
   text-transform: uppercase;
   font-weight: 300;
@@ -18,18 +18,13 @@ const Div = styled.div`
   /* ... */
 `;
 
-class Genre extends Component {
+class Discover extends Component {
   state = {
     movies: []
   }
-  fetchMovies = async (id) => {
-    const res = await tmdb_api.get("/discover/movie", {
-      params: {
-        with_genres: id
-      }
-    });
+  fetchMovies = async (type) => {
+    const res = await tmdb_api.get(`/movie/${type}`);
     const list = res.data.results;
-
     const movies = list.map(genreMovie => ({
       id: genreMovie.id,
       title: genreMovie.original_title,
@@ -40,12 +35,12 @@ class Genre extends Component {
     this.setState({ movies });
   }
   componentWillReceiveProps(nextProps) {
-    const { genres, match: { params } } = nextProps;
-    const genre = genres.find(g => g.name.toLowerCase() === params.name);
-    this.fetchMovies(genre.id);
+    const { match: { params } } = nextProps;
+    this.fetchMovies(params.type);
   }
   componentDidMount() {
-    this.fetchMovies(28);
+    const { match: { params } } = this.props;
+    this.fetchMovies(params.type);
   }
   render() {
     // console.log(this.props);
@@ -53,7 +48,7 @@ class Genre extends Component {
     const { movies } = this.state;
     return (<>
       <Div>
-        <H2>{match.params.name}</H2>
+        <H2>{_.startCase(match.params.type)}</H2>
         <H4>Movies</H4>
         <MovieList movies={movies}></MovieList>
       </Div>
@@ -61,4 +56,4 @@ class Genre extends Component {
   }
 }
 
-export default Genre;
+export default Discover;
