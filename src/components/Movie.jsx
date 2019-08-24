@@ -1,29 +1,34 @@
 import { Component } from 'react';
 import tmdb_api from '../api/tmdb';
-
+import _ from 'lodash';
 class Movie extends Component {
   async componentDidMount() {
-    const { match: { params } } = this.props;
+    const {
+      match: { params }
+    } = this.props;
     const { data } = await tmdb_api.get(`/movie/${params.id}`, {
       params: {
-        "api_key": process.env.REACT_APP_MOVIEDB_API
+        api_key: process.env.REACT_APP_MOVIEDB_API
       }
     });
-    console.log(data);
-    const movie = {
-      original_title: data.original_title,
-      tagline: data.tagline,
-      vote_average: data.vote_average,
-      vote_count: data.vote_count,
-      overview: data.overview,
-      homepage: data.homepage,
-      release_date: data.release_date,
-      revenue: data.revenue
-    }
-    // console.log(movie);
+    const movie = _.pick(data, [
+      'original_title',
+      'tagline',
+      'vote_average',
+      'vote_count',
+      'overview',
+      'homepage',
+      'release_date',
+      'revenue',
+      'genres',
+      'poster_path',
+      'budget',
+      'revenue'
+    ]);
+    console.log(data, movie);
   }
   render() {
-    return (null);
+    return null;
   }
 }
 
